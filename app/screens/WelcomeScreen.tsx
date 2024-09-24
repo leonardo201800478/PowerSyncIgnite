@@ -1,83 +1,32 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack"
+import { Lists, SignOutButton } from "app/components"
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import {
-  Text,
-} from "app/components"
-import { isRTL } from "../i18n"
-import { AppStackScreenProps } from "../navigators"
-import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { ViewStyle } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { SignedInNavigatorParamList } from "../navigators/SignedInNavigator"
+import { colors } from "../theme"
 
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
+interface WelcomeScreenProps
+  extends NativeStackScreenProps<SignedInNavigatorParamList, "Welcome"> {}
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
-
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-) {
-
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
-
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen() {
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
+    <SafeAreaView style={$container}>
+      {/* Lists component renders the user's data */}
+      <Lists />
 
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
-      </View>
-    </View>
+      {/* SignOutButton allows user to log out */}
+      <SignOutButton />
+    </SafeAreaView>
   )
 })
 
+// Styles for the container, using flex to adjust the layout
 const $container: ViewStyle = {
-  flex: 1,
-  backgroundColor: colors.background,
-}
-
-const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
-  paddingHorizontal: spacing.lg,
-}
-
-const $bottomContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-}
-const $welcomeLogo: ImageStyle = {
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
-}
-
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.md,
+  flex: 1, // Ensures the container takes up full screen height
+  backgroundColor: colors.palette.neutral300,
+  justifyContent: "flex-start", // Align items to the top
+  paddingHorizontal: 16, // Adds horizontal padding for better spacing
+  paddingVertical: 24, // Adds vertical padding
 }

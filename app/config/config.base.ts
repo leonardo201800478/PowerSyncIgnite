@@ -1,26 +1,17 @@
+// app/config/config.base.ts:
+
+// update the interface to include the new properties
 export interface ConfigBaseProps {
-  persistNavigation: "always" | "dev" | "prod" | "never"
-  catchErrors: "always" | "dev" | "prod" | "never"
-  exitRoutes: string[]
+  // Existing config properties
+  supabaseUrl: string
+  supabaseAnonKey: string
+  powersyncUrl: string
 }
 
-export type PersistNavigationConfig = ConfigBaseProps["persistNavigation"]
-
+// Add the new properties to the config object
 const BaseConfig: ConfigBaseProps = {
-  // This feature is particularly useful in development mode, but
-  // can be used in production as well if you prefer.
-  persistNavigation: "dev",
-
-  /**
-   * Only enable if we're catching errors in the right environment
-   */
-  catchErrors: "always",
-
-  /**
-   * This is a list of all the route names that will exit the app if the back button
-   * is pressed while in that screen. Only affects Android.
-   */
-  exitRoutes: ["Welcome"],
+  // Existing config values
+  supabaseUrl: "<<YOUR_SUPABASE_URL>>",
+  supabaseAnonKey: "<<YOUR_SUPABASE_ANON_KEY>>",
+  powersyncUrl: "<<YOUR_POWER_SYNC_URL>>",
 }
-
-export default BaseConfig
